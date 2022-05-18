@@ -10,7 +10,7 @@ cols = ["Age",
         "Gender", "ID", "Student", "AnsSE", "AnsIA", "AnsHAPPY"]
 
 
-def create_df(filename="part_of_data.json"):
+def create_df(filename="data.json"):
     df = pd.DataFrame()
     for column in cols:
         df[column] = ""
@@ -43,7 +43,7 @@ def clear_data():
     df = df[(df.AnsIA <= 135) & (df.AnsIA >= 30)]
     df = df[(df.AnsSE <= 39) & (df.AnsSE >= 11)]
     df = df[(df.AnsHAPPY <= 15) & (df.AnsHAPPY >= 5)]
-    df = df.loc[~((df["Age"] == "0-15") & (df["Student"] == False)), :]
+    df = df.drop(df[(df["Age"] == "0-15") & (df["Student"] is True)].index)
     addicted = 0
     semi_addicted = 0
     not_addicted = 0
@@ -56,7 +56,7 @@ def clear_data():
     semi_happy = 0
     not_happy = 0
 
-    for x in df['AnsIA'].tolist():  # Uzaleznienie
+    for x in df['AnsIA'].tolist():  # Addiction
         if x >= 97:
             addicted += 1
         elif 97 > x >= 64:
@@ -64,7 +64,7 @@ def clear_data():
         else:
             not_addicted += 1
 
-    for x in df['AnsSE'].tolist():  # pewnosc siebie
+    for x in df['AnsSE'].tolist():  # Self-Confidence
         if x >= 25:
             confident += 1
         elif 25 > x >= 18:
@@ -72,7 +72,7 @@ def clear_data():
         else:
             not_confident += 1
 
-    for x in df['AnsHAPPY'].tolist():  # zadowolenie
+    for x in df['AnsHAPPY'].tolist():  # Happiness
         if x >= 11:
             happy += 1
         elif 11 > x >= 8:
@@ -126,7 +126,11 @@ def scores():
            ["Happy + Addicted", len(df[(df.AnsHAPPY >= 11) & (df.AnsIA >= 97)])],
            ["!Happy + Addicted", len(df[(df.AnsHAPPY <= 8) & (df.AnsIA >= 97)])],
            ["Confident + Addicted", len(df[(df.AnsSE >= 25) & (df.AnsIA >= 97)])],
-           ["!Confident + Addicted", len(df[(df.AnsSE <= 18) & (df.AnsIA <= 64)])],
+           ["!Confident + Addicted", len(df[(df.AnsSE <= 18) & (df.AnsIA >= 97)])],
+           ["Student + Addicted", len(df[(df.Student is True) & (df.AnsIA >= 97)])],
+           ["!Student + Addicted", len(df[(df.Student is False) & (df.AnsIA >= 97)])],
+           ["Student + !Addicted", len(df[(df.Student is True) & (df.AnsIA <= 64)])],
+           ["!Student + !Addicted", len(df[(df.Student is False) & (df.AnsIA <= 64)])]
     ]
     print(tabulate(data, headers=["Dependency", "Count"]))
     print()
