@@ -57,6 +57,3 @@ cm_matrix = pd.DataFrame(data=cm, columns=['Actual Positive:1', 'Actual Negative
 
 sns.heatmap(cm_matrix, annot=True, linewidths=0.5, linecolor="red", fmt=".0f")
 plt.show()
-
-
-

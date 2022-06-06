@@ -56,7 +56,7 @@ print(ac)
 
 fpr, tpr, _ = metrics.roc_curve(y_test,  y_pred)
 
-#create ROC curve
+# Create ROC curve
 plt.plot(fpr, tpr)
 plt.ylabel('True Positive Rate')
 plt.xlabel('False Positive Rate')

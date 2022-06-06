@@ -28,7 +28,7 @@ log_regression = LogisticRegression()
 log_regression.fit(X_train, y_train)
 
 # Define metrics
-y_pred = log_regression.predict_proba(X_test)[::,1]
+y_pred = log_regression.predict_proba(X_test)[::, 1]
 fpr, tpr, _ = metrics.roc_curve(y_test, y_pred)
 
 # Create ROC curve
