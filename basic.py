@@ -44,6 +44,7 @@ def create_df(filename="data.json"):
 
 def evaluate_data():
     df = create_df()
+
     addicted = 0
     semi_addicted = 0
     not_addicted = 0
@@ -136,7 +137,7 @@ def scores():
     print()
 
 
-def create_training_set():
+def create_ml_dataframe():
     df = create_df()
     
     addicted = []
@@ -171,26 +172,6 @@ def create_training_set():
     df["Confident"] = confident
     df["Happy"] = happy
     return df
-
-
-def mfa():  # most frequent answers
-    df = evaluate_data()
-    list_of_answers = []
-
-    for col in df.columns:
-        if col == "ID":
-            continue
-        top_values = df[col].mode()
-        list_of_answers.append(top_values)
-    for i in range(len(list_of_answers)):
-        list_of_answers[i] = str(list_of_answers[i])
-        list_of_answers[i] = list_of_answers[i][:-14]
-        list_of_answers[i] = list_of_answers[i].split("\n")
-        for j in range(len(list_of_answers[i])):
-            list_of_answers[i][j] = list_of_answers[i][j][1:].strip()
-
-    print(list_of_answers)
-    return list_of_answers
 
 
 if __name__ == "__main__":
